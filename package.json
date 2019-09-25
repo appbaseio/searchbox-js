@@ -1,0 +1,45 @@
+{
+    "name": "searchbox",
+    "version": "0.0.1-alpha",
+    "private": false,
+    "description": "Autocomplete for Searchbase",
+    "main": "dist/searchbox.cjs.js",
+    "jsnext:main": "dist/searchbox.es.js",
+    "umd": "dist/searchbox.umd.js",
+    "module": "dist/searchbox.es.js",
+    "scripts": {
+        "build": "rollup -c",
+        "dev": "rollup -c -w"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/appbaseio/searchbox.git"
+    },
+    "author": "jyash97@gmail.com",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/appbaseio/searchbox/issues"
+    },
+    "homepage": "https://github.com/appbaseio/searchbox#readme",
+    "files": [
+        "dist"
+    ],
+    "keywords": [
+        "appbase",
+        "elasticsearch",
+        "search",
+        "vanilla js"
+    ],
+    "dependencies": {
+        "@appbaseio/searchbase": "1.0.0-alpha",
+        "immediate": "^3.2.3"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.6.2",
+        "rollup": "^1.21.2",
+        "rollup-plugin-babel": "^4.3.3",
+        "rollup-plugin-commonjs": "^10.1.0",
+        "rollup-plugin-node-resolve": "^5.2.0",
+        "rollup-plugin-terser": "^5.1.2"
+    }
+}

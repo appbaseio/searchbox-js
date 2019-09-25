@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Example</title>
+    <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <style>
+            .appbase-autocomplete {
+                width: 100%;
+            }
+    
+            .appbase-autocomplete .aa-input,
+            .appbase-autocomplete .aa-hint {
+                width: 100%;
+            }
+    
+            .appbase-autocomplete .aa-hint {
+                color: #999;
+            }
+    
+            .appbase-autocomplete .aa-dropdown-menu {
+                width: 100%;
+                background-color: #fff;
+                outline: 1px solid #999;
+                border-top: none;
+            }
+    
+            .appbase-autocomplete .aa-dropdown-menu .aa-suggestion {
+                cursor: pointer;
+                padding: 5px 4px;
+            }
+    
+            .appbase-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+                background-color: #B2D7FF;
+            }
+    
+            .appbase-autocomplete .aa-dropdown-menu .aa-suggestion em {
+                font-weight: bold;
+                font-style: normal;
+            }
+        </style>
+</head>
+
+<body class="container-fluid">
+    <div class="row">
+        <div class="p-3 col-6 my-2">
+            <h6>AutoComplete with templates</h6>
+            <input id="git" class="form-control" name="git" type="text" placeholder="Random placeholder which explains Random title">
+        </div>
+
+        <div class="p-3 col-6 my-2">
+            <h6>AutoComplete with no hint</h6>
+            <input id="git2" class="form-control" name="git" type="text"
+                placeholder="No hint on input">
+        </div>
+
+        <div class="p-3 col-6 my-2">
+            <h6>AutoComplete with autoselect</h6>
+            <input id="git3" class="form-control" name="git" type="text"
+                placeholder="First suggestion gets focus">
+        </div>
+
+        <div class="p-3 col-6 my-2">
+            <h6>AutoComplete with clearOnSelected</h6>
+            <input id="git4" class="form-control" name="git" type="text"
+                placeholder="Clears input on Selcting a suggestion">
+        </div>
+
+        <div class="p-3 col-6 my-2">
+            <h6>AutoComplete with openOnFocus</h6>
+            <input id="git5" class="form-control" name="git" type="text"
+                placeholder="Select a value and get focus again to see menu">
+        </div>
+
+        <div class="p-3 col-6 my-2">
+            <h6>AutoComplete with keyboardShortcuts</h6>
+            <input id="git6" class="form-control" name="git" type="text"
+                placeholder="Type a or s for getting focus">
+        </div>
+
+        <div class="p-3 col-6 my-2">
+            <h6>AutoComplete with minLength ( min characters for searching )</h6>
+            <input id="git7" class="form-control" name="git" type="text" placeholder="Get Results from 3 characters">
+        </div>
+
+        <div class="p-3 col-6 my-2">
+            <h6>AutoComplete with events</h6>
+            <input id="git8" class="form-control" name="git" type="text" placeholder="Check console for all events">
+        </div>
+
+        <div class="p-3 col-6 my-2">
+            <h6>AutoComplete with debounce of 1s</h6>
+            <input id="git9" class="form-control" name="git" type="text" placeholder="Put a timer for 1s to ensure this">
+        </div>
+        
+        <div class="p-3 col-6 my-2">
+            <h6>AutoComplete with displayKey</h6>
+            <input id="git10" class="form-control" name="git" type="text" placeholder="Value on input will be start with Awesome and end with Blossom">
+        </div>
+        
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@appbaseio/searchbase@1.0.0-alpha/dist/@appbaseio/searchbase.umd.min.js">
+    </script>
+   
+    <script src="../src/index.js">
+    </script>
+
+    <script>
+        const instance = new Searchbase({
+            index: 'gitxplore-latest-app',
+            credentials: 'LsxvulCKp:a500b460-73ff-4882-8d34-9df8064b3b38',
+            url: 'https://scalr.api.appbase.io',
+            size: 5,
+            dataField: ['name', 'description', 'name.raw', 'fullname', 'owner', 'topics'],
+        });
+
+        autocomplete('#git',{} , [
+                {
+                    source: autocomplete.sources.hits(instance),
+                    templates: {
+                        suggestion: function (suggestion) {
+                            return `<p class="is-4">${suggestion.label}</p>`;
+                        },
+                        empty: function() {
+                            return `<div>No Results</div>`
+                        },
+                        footer: function({query, isEmpty}) {
+                            return `
+                                <div style="background: #eaeaea; padding: 10px;">Footer</div>
+                            `;
+                        },
+                        header: function ({ query, isEmpty }) {
+                            return `
+                                <div style="background: #efefef; padding: 10px;">
+                                    Hello From Header
+                                </div>
+                            `;
+                        }
+                    }
+                }
+            ]);
+
+            autocomplete('#git2', { hint: false }, [
+                {
+                    source: autocomplete.sources.hits(instance),
+                    templates: {
+                        suggestion: function (suggestion) {
+                            return `<p class="is-4">${suggestion.label}</p>`;
+                        },
+                    }
+                }
+            ]);
+
+            autocomplete('#git3',  { autoselect: true }, [
+                {
+                    source: autocomplete.sources.hits(instance),
+                    templates: {
+                        suggestion: function (suggestion) {
+                            return `<p class="is-4">${suggestion.label}</p>`;
+                        },
+                    }
+                }
+            ]);
+
+            autocomplete('#git4', { clearOnSelected: true }, [
+                {
+                    source: autocomplete.sources.hits(instance),
+                    templates: {
+                        suggestion: function (suggestion) {
+                            return `<p class="is-4">${suggestion.label}</p>`;
+                        },
+                    }
+                }
+            ]);
+
+            autocomplete('#git5', { openOnFocus: true }, [
+                {
+                    source: autocomplete.sources.hits(instance),
+                    templates: {
+                        suggestion: function (suggestion) {
+                            return `<p class="is-4">${suggestion.label}</p>`;
+                        },
+                    }
+                }
+            ]);
+
+            autocomplete('#git6', { keyboardShortcuts: ['s', 'a'] }, [
+                {
+                    source: autocomplete.sources.hits(instance),
+                    templates: {
+                        suggestion: function (suggestion) {
+                            return `<p class="is-4">${suggestion.label}</p>`;
+                        },
+                    }
+                }
+            ]);
+
+            autocomplete('#git7', { minLength: 3 }, [
+                {
+                    source: autocomplete.sources.hits(instance),
+                    templates: {
+                        suggestion: function (suggestion) {
+                            return `<p class="is-4">${suggestion.label}</p>`;
+                        },
+                    }
+                }
+            ]);
+
+            autocomplete('#git8', { }, [
+                {
+                    source: autocomplete.sources.hits(instance),
+                    templates: {
+                        suggestion: function (suggestion) {
+                            return `<p class="is-4">${suggestion.label}</p>`;
+                        },
+                    }
+                }
+            ]).on('autocomplete:selected', function (event, suggestion, dataset, context) {
+                console.log('selected', suggestion, dataset, context);
+            }).on('autocomplete:cursorchanged', function (event, suggestion, dataset) {
+                console.log('cursorchanged', suggestion, dataset);
+            }).on('autocomplete:opened', function (event) {
+                console.log('opened', event)
+            }).on('autocomplete:shown', function (event) {
+                console.log('shown', event)
+            }).on('autocomplete:empty', function (event) {
+                console.log('empty', event)
+            });;
+
+            autocomplete('#git9', { }, [
+                {
+                    source: autocomplete.sources.hits(instance),
+                    templates: {
+                        suggestion: function (suggestion) {
+                            return `<p class="is-4">${suggestion.label}</p>`;
+                        },
+                    },
+                    debounce: 1000,
+                }
+            ]);
+
+            autocomplete('#git10', {}, [
+                {
+                    source: autocomplete.sources.hits(instance),
+                    templates: {
+                        suggestion: function (suggestion) {
+                            return `<p class="is-4">${suggestion.label}</p>`;
+                        },
+                    },
+                    displayKey: function(suggestion) {
+                        return  'Awesome ' + suggestion.label + ' Blossom';
+                    },
+                }
+            ]);
+    </script>
+</body>
+</html>
