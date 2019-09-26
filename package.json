@@ -13,6 +13,11 @@
 		"watch": "rollup -c -w",
 		"example": "cd examples && yarn start"
 	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/appbaseio/searchbox.git"
