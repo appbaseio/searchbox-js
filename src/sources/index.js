@@ -1,5 +1,5 @@
-"use strict";
+'use strict';
 
 module.exports = {
-  hits: require("./hits.js"),
+	hits: require('./hits.js')
 };

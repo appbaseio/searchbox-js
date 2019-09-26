@@ -1,0 +1,7 @@
+{
+	"extends": ["standard", "prettier"],
+	"rules": {
+		"semi": 0
+	},
+	"plugins": ["prettier"]
+}
