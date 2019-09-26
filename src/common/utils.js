@@ -4,6 +4,7 @@ var DOM = require('./dom.js');
 var zepto = require('./zepto');
 
 function escapeRegExp(str) {
+	// eslint-disable-next-line
 	return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 }
 
