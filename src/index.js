@@ -1,27 +1,15 @@
 "use strict";
 
 // this will inject Zepto in window, unfortunately no easy commonJS zepto build
-var zepto = require("./zepto.js");
-// setup DOM element
-var DOM = require("./common/dom.js");
-DOM.element = zepto;
 
 // setup utils functions
 var _ = require("./common/utils.js");
-_.isArray = zepto.isArray;
-_.isFunction = zepto.isFunction;
-_.isObject = zepto.isPlainObject;
-_.bind = zepto.proxy;
-_.each = function(collection, cb) {
-  // stupid argument order for jQuery.each
-  zepto.each(collection, reverseArgs);
-  function reverseArgs(index, value) {
-    return cb(value, index);
-  }
-};
-_.map = zepto.map;
-_.mixin = zepto.extend;
-_.Event = zepto.Event;
+
+var zepto = _.zepto;
+
+// setup DOM element
+var DOM = require("./common/dom.js");
+DOM.element = zepto;
 
 var typeaheadKey = "aaAutocomplete";
 var Typeahead = require("./autocomplete/typeahead.js");
@@ -92,7 +80,5 @@ autocomplete.noConflict = function noConflict() {
   return autocomplete;
 };
 
-
-window.autocomplete = autocomplete;
 module.exports = autocomplete;
 

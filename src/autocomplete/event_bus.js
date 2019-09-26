@@ -1,6 +1,6 @@
 "use strict";
 
-var namespace = "autocomplete:";
+var namespace = "";
 
 var _ = require("../common/utils.js");
 var DOM = require("../common/dom.js");

@@ -1,6 +1,7 @@
 "use strict";
 
 var DOM = require("./dom.js");
+var zepto = require('./zepto');
 
 function escapeRegExp(str) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
@@ -10,13 +11,21 @@ module.exports = {
   // those methods are implemented differently
   // depending on which build it is, using
   // $... or angular... or Zepto... or require(...)
-  isArray: null,
-  isFunction: null,
-  isObject: null,
-  bind: null,
-  each: null,
-  map: null,
-  mixin: null,
+  isArray: zepto.isArray,
+  isFunction: zepto.isFunction,
+  isObject: zepto.isPlainObject,
+  bind: zepto.proxy,
+  each: function(collection, cb) {
+    // stupid argument order for jQuery.each
+    zepto.each(collection, reverseArgs);
+    function reverseArgs(index, value) {
+      return cb(value, index);
+    }
+  },
+  map: zepto.map,
+  mixin: zepto.extend,
+  Event: zepto.Event,
+  zepto: zepto,
 
   isMsie: function(agentString) {
     if (agentString === undefined) {

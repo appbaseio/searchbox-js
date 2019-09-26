@@ -1,15 +1,17 @@
 {
     "name": "searchbox",
-    "version": "0.0.1-alpha",
+    "version": "1.0.0-alpha",
     "private": false,
     "description": "Autocomplete for Searchbase",
     "main": "dist/searchbox.cjs.js",
     "jsnext:main": "dist/searchbox.es.js",
-    "umd": "dist/searchbox.umd.js",
+    "browser": "dist/searchbox.umd.js",
     "module": "dist/searchbox.es.js",
     "scripts": {
         "build": "rollup -c",
-        "dev": "rollup -c -w"
+        "dev": "concurrently --kill-others -n \"AUTOCOMPLETE\",\"EXAMPLE\", -c \"green\",\"magenta\", \"npm run watch\" \"npm run example\"",
+        "watch": "rollup -c -w",
+        "example": "cd examples && yarn start"
     },
     "repository": {
         "type": "git",
@@ -28,16 +30,15 @@
         "appbase",
         "elasticsearch",
         "search",
-        "vanilla js"
+        "vanilla js",
+        "searchbox"
     ],
     "dependencies": {
-        "@appbaseio/searchbase": "1.0.0-alpha",
         "immediate": "^3.2.3"
     },
     "devDependencies": {
-        "@babel/core": "^7.6.2",
+        "concurrently": "^4.1.2",
         "rollup": "^1.21.2",
-        "rollup-plugin-babel": "^4.3.3",
         "rollup-plugin-commonjs": "^10.1.0",
         "rollup-plugin-node-resolve": "^5.2.0",
         "rollup-plugin-terser": "^5.1.2"
