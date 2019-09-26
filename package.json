@@ -46,9 +46,15 @@
 		"eslint-plugin-prettier": "^3.1.1",
 		"eslint-plugin-promise": "^4.2.1",
 		"eslint-plugin-standard": "^4.0.1",
+		"lint-staged": "^9.4.0",
 		"rollup": "^1.21.2",
 		"rollup-plugin-commonjs": "^10.1.0",
 		"rollup-plugin-node-resolve": "^5.2.0",
 		"rollup-plugin-terser": "^5.1.2"
+	},
+	"lint-staged": {
+		"*.js": [
+			"eslint"
+		]
 	}
 }
