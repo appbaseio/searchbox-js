@@ -282,6 +282,4 @@ see [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## Credits
 
-This library has originally
-
 This library has originally been forked from [Algolia's autocomplete.js](https://github.com/algolia/autocomplete.js) library and which has been forked from [Twitter's typeahead.js](https://github.com/twitter/typeahead.js) library.
