@@ -30,6 +30,7 @@ function Dropdown(o) {
 
 	this.isOpen = false;
 	this.isEmpty = true;
+	this.isLoading = false;
 	this.minLength = o.minLength || 0;
 	this.templates = {};
 	this.appendTo = o.appendTo || false;
@@ -78,6 +79,23 @@ function Dropdown(o) {
 		);
 		this.$menu.append(this.$empty);
 		this.$empty.hide();
+	}
+
+	if (o.templates && o.templates.loader) {
+		this.templates.loader = _.templatify(o.templates.loader);
+		this.$loader = DOM.element(
+			'<div class="' +
+				_.className(
+					this.cssClasses.prefix,
+					this.cssClasses.loader,
+					true
+				) +
+				'">' +
+				'</div>'
+		);
+
+		this.$menu.append(this.$loader);
+		this.$loader.hide();
 	}
 
 	this.datasets = _.map(o.datasets, function(oDataset) {
@@ -166,8 +184,15 @@ _.mixin(Dropdown.prototype, EventEmitter, {
 
 	_onRendered: function onRendered(e, query) {
 		this.isEmpty = _.every(this.datasets, isDatasetEmpty);
+		this.isLoading = _.every(this.datasets, isDatasetLoading);
 
-		if (this.isEmpty) {
+		if (this.isLoading) {
+			if (_.any(this.datasets, hasLoadingTemplate)) {
+				this._show();
+			} else {
+				this._hide();
+			}
+		} else if (this.isEmpty) {
 			if (query.length >= this.minLength) {
 				this.trigger('empty');
 			}
@@ -211,8 +236,16 @@ _.mixin(Dropdown.prototype, EventEmitter, {
 			return dataset.isEmpty();
 		}
 
+		function isDatasetLoading(dataset) {
+			return dataset.isLoading();
+		}
+
 		function hasEmptyTemplate(dataset) {
 			return dataset.templates && dataset.templates.empty;
+		}
+
+		function hasLoadingTemplate(dataset) {
+			return dataset.templates && dataset.templates.loader;
 		}
 	},
 

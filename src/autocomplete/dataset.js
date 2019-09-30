@@ -28,6 +28,7 @@ function Dataset(o) {
 	// tracks the last query the dataset was updated for
 	this.query = null;
 	this._isEmpty = true;
+	this._isLoading = false;
 
 	this.highlight = !!o.highlight;
 	this.name =
@@ -96,7 +97,7 @@ Dataset.extractDatum = function extractDatum(el) {
 _.mixin(Dataset.prototype, EventEmitter, {
 	// ### private
 
-	_render: function render(query, suggestions) {
+	_render: function render(query, suggestions, loading) {
 		if (!this.$el) {
 			return;
 		}
@@ -108,8 +109,22 @@ _.mixin(Dataset.prototype, EventEmitter, {
 
 		hasSuggestions = suggestions && suggestions.length;
 		this._isEmpty = !hasSuggestions;
+		this._isLoading = loading;
 
-		if (!hasSuggestions && this.templates.empty) {
+		if (loading && this.templates.loader) {
+			this.$el
+				.html(getLoaderHtml.apply(this, renderArgs))
+				.prepend(
+					that.templates.header
+						? getHeaderHtml.apply(this, renderArgs)
+						: null
+				)
+				.append(
+					that.templates.footer
+						? getFooterHtml.apply(this, renderArgs)
+						: null
+				);
+		} else if (!hasSuggestions && this.templates.empty && !loading) {
 			this.$el
 				.html(getEmptyHtml.apply(this, renderArgs))
 				.prepend(
@@ -161,6 +176,12 @@ _.mixin(Dataset.prototype, EventEmitter, {
 			var args = [].slice.call(arguments, 0);
 			args = [{ query: query, isEmpty: true }].concat(args);
 			return that.templates.empty.apply(this, args);
+		}
+
+		function getLoaderHtml() {
+			var args = [].slice.call(arguments, 0);
+			args = [{ query: query, isLoading: true }].concat(args);
+			return that.templates.loader.apply(this, args);
 		}
 
 		function getSuggestionsHtml() {
@@ -235,7 +256,7 @@ _.mixin(Dataset.prototype, EventEmitter, {
 	},
 
 	update: function update(query) {
-		function handleSuggestions(suggestions) {
+		function handleSuggestions(suggestions, isLoading) {
 			// if the update has been canceled or if the query has changed
 			// do not render the suggestions as they've become outdated
 			if (!this.canceled && query === this.query) {
@@ -245,7 +266,8 @@ _.mixin(Dataset.prototype, EventEmitter, {
 				this.cacheSuggestions(query, suggestions, extraArgs);
 				this._render.apply(
 					this,
-					[query, suggestions].concat(extraArgs)
+					[query, suggestions].concat(extraArgs),
+					isLoading
 				);
 			}
 		}
@@ -318,6 +340,10 @@ _.mixin(Dataset.prototype, EventEmitter, {
 		return this._isEmpty;
 	},
 
+	isLoading: function isEmpty() {
+		return this._isLoading;
+	},
+
 	destroy: function destroy() {
 		this.clearCachedSuggestions();
 		this.$el = null;
@@ -340,6 +366,7 @@ function getDisplayFn(display) {
 function getTemplates(templates, displayFn) {
 	return {
 		empty: templates.empty && _.templatify(templates.empty),
+		loader: templates.loader && _.templatify(templates.loader),
 		header: templates.header && _.templatify(templates.header),
 		footer: templates.footer && _.templatify(templates.footer),
 		suggestion: templates.suggestion || suggestionTemplate

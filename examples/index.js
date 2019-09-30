@@ -16,6 +16,21 @@ const instance = new Searchbase({
 	]
 });
 
+const analyticsInstance = new Searchbase({
+	index: 'movies-store-app',
+	credentials: 'ctWRp9QBE:fece5752-b478-452b-8173-00b278e5e0b0',
+	url: 'https://scalr.api.appbase.io',
+	size: 5,
+	analytics: true,
+	dataField: [
+		'original_title',
+		'original_title.autosuggest',
+		'original_title.english',
+		'original_title.keyword',
+		'original_title.search'
+	]
+});
+
 searchbox('#git', {}, [
 	{
 		source: searchbox.sources.hits(instance),
@@ -25,6 +40,9 @@ searchbox('#git', {}, [
 			},
 			empty: function() {
 				return `<div>No Results</div>`;
+			},
+			loader: function() {
+				return `<div>Loader</div>`;
 			},
 			footer: function({ query, isEmpty }) {
 				return `
@@ -156,6 +174,38 @@ searchbox('#git10', {}, [
 		},
 		displayKey: function(suggestion) {
 			return 'Awesome ' + suggestion.label + ' Blossom';
+		}
+	}
+]);
+
+searchbox('#git11', {}, [
+	{
+		source: searchbox.sources.hits(analyticsInstance),
+		templates: {
+			suggestion: function(suggestion) {
+				return `<p class="is-4">${suggestion.label}</p>`;
+			}
+		}
+	}
+]).on('selected', function(event, suggestion, dataset, context) {
+	if (
+		(context && context.selectionMethod === 'click') ||
+		context.selectionMethod === 'enter'
+	) {
+		analyticsInstance.triggerClickAnalytics(suggestion.source._click_id);
+	}
+});
+
+searchbox('#git12', {}, [
+	{
+		source: searchbox.sources.hits(analyticsInstance),
+		templates: {
+			suggestion: function(suggestion) {
+				return `<p class="is-4">${suggestion.label}</p>`;
+			},
+			loader: function() {
+				return `<p>Loading Things</p>`;
+			}
 		}
 	}
 ]);
