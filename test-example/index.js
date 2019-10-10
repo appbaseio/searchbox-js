@@ -1,4 +1,4 @@
-import searchbox from '@appbaseio/searchbox';
+import searchbox from '..';
 import Searchbase from '@appbaseio/searchbase';
 
 const instance = new Searchbase({

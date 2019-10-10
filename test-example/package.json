@@ -7,8 +7,7 @@
 		"build": "parcel build index.html"
 	},
 	"dependencies": {
-		"@appbaseio/searchbase": "^1.0.0-alpha",
-		"@appbaseio/searchbox": "0.0.1-alpha"
+		"@appbaseio/searchbase": "^1.0.0-alpha"
 	},
 	"devDependencies": {
 		"@babel/core": "7.2.0",

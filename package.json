@@ -1,5 +1,5 @@
 {
-	"name": "searchbox",
+	"name": "@appbaseio/searchbox",
 	"version": "0.0.1-alpha",
 	"private": false,
 	"description": "Autocomplete for Searchbase",
@@ -11,7 +11,7 @@
 		"build": "rollup -c",
 		"dev": "concurrently --kill-others -n \"AUTOCOMPLETE\",\"EXAMPLE\", -c \"green\",\"magenta\", \"npm run watch\" \"npm run example\"",
 		"watch": "rollup -c -w",
-		"example": "cd examples && yarn start"
+		"example": "cd test-example && yarn && yarn start"
 	},
 	"husky": {
 		"hooks": {

@@ -1,11 +1,11 @@
 # Searchbox
 
-This JavaScript library adds a fast and fully-featured auto-completion menu to your search box displaying results "as you type". It can easily be combined with Appbase's realtime search engine.
+`SearchBox` offers a lightweight and performance focused searchbox UI component to query and display results from your ElasticSearch app (aka index) using declarative props.
 
 ### npm
 
 ```sh
-npm install --save searchbox
+npm install --save @appbaseio/searchbox @appbaseio/searchbase
 ```
 
 ## Usage
@@ -14,79 +14,57 @@ npm install --save searchbox
 
 ```html
 <input type="text" id="git" placeholder="Search movies..." />
+```
 
-<!-- [ Make sure to include Searchbase as well ] -->
-<script>
-	const instance = new Searchbase({
-		index: 'gitxplore-latest-app',
-		credentials: 'LsxvulCKp:a500b460-73ff-4882-8d34-9df8064b3b38',
-		url: 'https://scalr.api.appbase.io',
-		size: 5,
-		dataField: [
-			'name',
-			'description',
-			'name.raw',
-			'fullname',
-			'owner',
-			'topics'
-		]
-	});
-	searchbox('#git', {}, [
-		{
-			source: searchbox.sources.hits(instance),
-			templates: {
-				suggestion: function(suggestion) {
-					return `<p class="is-4">${suggestion.label}</p>`;
-				},
-				empty: function() {
-					return `<div>No Results</div>`;
-				},
-				loader: function() {
-					return `<div>Loader</div>`;
-				},
-				footer: function({ query, isEmpty }) {
-					return `
+```js
+import Searchbase from '@appbaseio/searchbase';
+import searchbox from '@appbaseio/searchbox';
+
+const instance = new Searchbase({
+	index: 'gitxplore-latest-app',
+	credentials: 'LsxvulCKp:a500b460-73ff-4882-8d34-9df8064b3b38',
+	url: 'https://scalr.api.appbase.io',
+	size: 5,
+	dataField: [
+		'name',
+		'description',
+		'name.raw',
+		'fullname',
+		'owner',
+		'topics'
+	]
+});
+searchbox('#git', {}, [
+	{
+		source: searchbox.sources.hits(instance),
+		templates: {
+			suggestion: function(suggestion) {
+				return `<p class="is-4">${suggestion.label}</p>`;
+			},
+			empty: function() {
+				return `<div>No Results</div>`;
+			},
+			loader: function() {
+				return `<div>Loader</div>`;
+			},
+			footer: function({ query, isEmpty }) {
+				return `
                     <div style="background: #eaeaea; padding: 10px;">Footer</div>
                 `;
-				},
-				header: function({ query, isEmpty }) {
-					return `
+			},
+			header: function({ query, isEmpty }) {
+				return `
                     <div style="background: #efefef; padding: 10px;">
                         Hello From Header
                     </div>
                 `;
-				}
 			}
 		}
-	]);
-</script>
+	}
+]);
 ```
 
 ## Look and Feel
-
-Below is a faux mustache template describing the DOM structure of an autocomplete
-dropdown menu. Keep in mind that `header`, `footer`, `suggestion`, `empty` and `loader`
-come from the provided templates detailed [here](#datasets).
-
-```html
-<span
-	class="aa-dropdown-menu{{#datasets}} aa-{{'with' or 'without'}}-{{name}}{{/datasets}}"
->
-	{{#datasets}}
-	<div class="aa-dataset-{{name}}">
-		{{{header}}}
-		<span class="aa-suggestions">
-			{{#suggestions}}
-			<div class="aa-suggestion">{{{suggestion}}}</div>
-			{{/suggestions}} {{^suggestions}} {{{empty}}} {{/suggestions}}
-		</span>
-		{{{footer}}}
-	</div>
-	{{/datasets}} {{empty}}
-</span>
-```
-
-When an end-user mouses or keys over a `.aa-suggestion`, the class `aa-cursor` will be added to it. You can use this class as a hook for styling the "under cursor" state of suggestions.
 
 Add the following CSS rules to add a default style:
 
