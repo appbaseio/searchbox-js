@@ -20,13 +20,13 @@
 9. **[Other Projects You Might Like](#9-other-projects-you-might-like)**
 10. **[Credits](#10-credits)**
 
-##1. Intro
+## 1. Intro
 
 `SearchBox` offers a lightweight and performance focused searchbox UI component to query and display results from your ElasticSearch app (aka index) using declarative props.
 
 [⬆ Back to Top](#toc)
 
-##2. Installation
+## 2. Installation
 
 ```sh
 npm install --save @appbaseio/searchbox @appbaseio/searchbase
@@ -34,7 +34,7 @@ npm install --save @appbaseio/searchbox @appbaseio/searchbase
 
 [⬆ Back to Top](#toc)
 
-##3. Usage
+## 3. Usage
 
 ### Standalone
 
@@ -92,7 +92,7 @@ searchbox('#git', {}, [
 
 [⬆ Back to Top](#toc)
 
-##4. Look and Feel
+## 4. Look and Feel
 
 Add the following CSS rules to add a default style:
 
@@ -130,7 +130,7 @@ Here is what the [basic example](https://github.com/appbaseio/searchbox/tree/mas
 
 [⬆ Back to Top](#toc)
 
-##5. Global Options
+## 5. Global Options
 
 When initializing an autocomplete, there are a number of global options you can configure.
 
@@ -189,7 +189,7 @@ One scenario for use this option. e.g. You have a `max-width` css attribute in y
 
 [⬆ Back to Top](#toc)
 
-##6. Datasets
+## 6. Datasets
 
 An autocomplete is composed of one or more datasets. When an end-user modifies the
 value of the underlying input, each dataset will attempt to render suggestions for the
@@ -247,7 +247,7 @@ Datasets can be configured using the following options.
 
 [⬆ Back to Top](#toc)
 
-##7. Events
+## 7. Events
 
 The autocomplete component triggers the following custom events.
 
@@ -290,13 +290,13 @@ All custom events are triggered on the element initialized as the autocomplete.
 
 [⬆ Back to Top](#toc)
 
-##8. Contributing & releasing
+## 8. Contributing & releasing
 
 see [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 [⬆ Back to Top](#toc)
 
-##9. Other Projects You Might Like
+## 9. Other Projects You Might Like
 
 -   [**arc**](https://github.com/appbaseio/arc) API Gateway for ElasticSearch (Out of the box Security, Rate Limit Features, Record Analytics and Request Logs).
 
@@ -315,7 +315,7 @@ see [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 [⬆ Back to Top](#toc)
 
-##10. Credits
+## 10. Credits
 
 This library has originally been forked from [Algolia's autocomplete.js](https://github.com/algolia/autocomplete.js) library and which has been forked from [Twitter's typeahead.js](https://github.com/twitter/typeahead.js) library.
 
