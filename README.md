@@ -1,14 +1,40 @@
-# Searchbox
+<h2 align="center">
+  <img src="https://i.imgur.com/iiR9wAs.png" alt="searchbox" title="searchbox" width="200" />
+  <br />
+  Searchbox
+  <br />
+</h2>
+<p align="center" style="font-size: 1.2rem">A lightweight vanilla JS search library with some common utilities.</p>
+<hr />
+
+## TOC
+
+1. **[Intro](#1-intro)**
+2. **[Installation](#2-installation)**
+3. **[Usage](#3-usage)**
+4. **[Look and Feel](#4-look-and-feel)**
+5. **[Global Options](#5-global-options)**
+6. **[Dataset](#6-datasets)**
+7. **[Events](#7-events)**
+8. **[Contributing](#8-contributing--releasing)**
+9. **[Other Projects You Might Like](#9-other-projects-you-might-like)**
+10. **[Credits](#10-credits)**
+
+## 1. Intro
 
 `SearchBox` offers a lightweight and performance focused searchbox UI component to query and display results from your ElasticSearch app (aka index) using declarative props.
 
-### npm
+[⬆ Back to Top](#toc)
+
+## 2. Installation
 
 ```sh
 npm install --save @appbaseio/searchbox @appbaseio/searchbase
 ```
 
-## Usage
+[⬆ Back to Top](#toc)
+
+## 3. Usage
 
 ### Standalone
 
@@ -64,7 +90,9 @@ searchbox('#git', {}, [
 ]);
 ```
 
-## Look and Feel
+[⬆ Back to Top](#toc)
+
+## 4. Look and Feel
 
 Add the following CSS rules to add a default style:
 
@@ -100,7 +128,9 @@ Add the following CSS rules to add a default style:
 
 Here is what the [basic example](https://github.com/appbaseio/searchbox/tree/master/examples) looks like:
 
-## Global Options
+[⬆ Back to Top](#toc)
+
+## 5. Global Options
 
 When initializing an autocomplete, there are a number of global options you can configure.
 
@@ -157,7 +187,9 @@ When initializing an autocomplete, there are a number of global options you can 
 
 One scenario for use this option. e.g. You have a `max-width` css attribute in your `autocomplete-dropdown-menu` and you need to width grows until fill the `max-width`. In this scenario you put a `width: auto` in your autocomplete wrapper css class and the `max-width` in your autocomplete dropdown class and all done.
 
-## Datasets
+[⬆ Back to Top](#toc)
+
+## 6. Datasets
 
 An autocomplete is composed of one or more datasets. When an end-user modifies the
 value of the underlying input, each dataset will attempt to render suggestions for the
@@ -213,7 +245,9 @@ Datasets can be configured using the following options.
 -   `debounce` – If set, will postpone the source execution until after `debounce` milliseconds
     have elapsed since the last time it was invoked.
 
-## Events
+[⬆ Back to Top](#toc)
+
+## 7. Events
 
 The autocomplete component triggers the following custom events.
 
@@ -254,10 +288,37 @@ The autocomplete component triggers the following custom events.
 
 All custom events are triggered on the element initialized as the autocomplete.
 
-## Contributing & releasing
+[⬆ Back to Top](#toc)
+
+## 8. Contributing & releasing
 
 see [CONTRIBUTING.md](./CONTRIBUTING.md)
 
-## Credits
+[⬆ Back to Top](#toc)
+
+## 9. Other Projects You Might Like
+
+-   [**reactivesearch**](https://github.com/appbaseio/reactivesearch) React, React Native and Vue UI components for building data-driven apps with Elasticsearch.
+
+-   [**arc**](https://github.com/appbaseio/arc) API Gateway for ElasticSearch (Out of the box Security, Rate Limit Features, Record Analytics and Request Logs).
+
+-   **searchbox** Similar to `searchbox` we offer a lightweight and performance focused searchbox UI libraries for React and Vue.
+
+    -   [**React**](https://github.com/appbaseio/react-searchbox) - (~30kB Minified + Gzipped)
+    -   [**Vue**](https://github.com/appbaseio/vue-searchbox) - (~22kB Minified + Gzipped)
+
+-   [**dejavu**](https://github.com/appbaseio/dejavu) allows viewing raw data within an appbase.io (or Elasticsearch) app. **Soon to be released feature:** An ability to import custom data from CSV and JSON files, along with a guided walkthrough on applying data mappings.
+
+-   [**mirage**](https://github.com/appbaseio/mirage) ReactiveSearch components can be extended using custom Elasticsearch queries. For those new to Elasticsearch, Mirage provides an intuitive GUI for composing queries.
+
+-   [**ReactiveMaps**](https://github.com/appbaseio/reactivesearch/tree/next/packages/maps) is a similar project to Reactive Search that allows building realtime maps easily.
+
+-   [**appbase-js**](https://github.com/appbaseio/appbase-js) While building search UIs is dandy with Reactive Search, you might also need to add some input forms. **appbase-js** comes in handy there.
+
+[⬆ Back to Top](#toc)
+
+## 10. Credits
 
 This library has originally been forked from [Algolia's autocomplete.js](https://github.com/algolia/autocomplete.js) library and which has been forked from [Twitter's typeahead.js](https://github.com/twitter/typeahead.js) library.
+
+[⬆ Back to Top](#toc)
