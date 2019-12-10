@@ -31,6 +31,7 @@ function Dropdown(o) {
 	this.isOpen = false;
 	this.isEmpty = true;
 	this.isLoading = false;
+	this.instance = o.instance;
 	this.minLength = o.minLength || 0;
 	this.templates = {};
 	this.appendTo = o.appendTo || false;
@@ -99,7 +100,12 @@ function Dropdown(o) {
 	}
 
 	this.datasets = _.map(o.datasets, function(oDataset) {
-		return initializeDataset(that.$menu, oDataset, o.cssClasses);
+		return initializeDataset(
+			that.$menu,
+			oDataset,
+			o.cssClasses,
+			o.instance
+		);
 	});
 	_.each(this.datasets, function(dataset) {
 		var root = dataset.getRoot();
@@ -470,9 +476,9 @@ _.mixin(Dropdown.prototype, EventEmitter, {
 // ----------------
 Dropdown.Dataset = Dataset;
 
-function initializeDataset($menu, oDataset, cssClasses) {
+function initializeDataset($menu, oDataset, cssClasses, instance) {
 	return new Dropdown.Dataset(
-		_.mixin({ $menu: $menu, cssClasses: cssClasses }, oDataset)
+		_.mixin({ $menu: $menu, cssClasses: cssClasses }, oDataset, instance)
 	);
 }
 

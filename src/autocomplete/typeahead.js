@@ -25,6 +25,7 @@ function Typeahead(o) {
 	}
 
 	this.isActivated = false;
+	this.instance = o.instance;
 	this.debug = !!o.debug;
 	this.autoselect = !!o.autoselect;
 	this.autoselectOnBlur = !!o.autoselectOnBlur;
@@ -103,7 +104,8 @@ function Typeahead(o) {
 		datasets: o.datasets,
 		templates: o.templates,
 		cssClasses: o.cssClasses,
-		minLength: this.minLength
+		minLength: this.minLength,
+		instance: o
 	})
 		.onSync('suggestionClicked', this._onSuggestionClicked, this)
 		.onSync('cursorMoved', this._onCursorMoved, this)
@@ -472,6 +474,13 @@ _.mixin(Typeahead.prototype, {
 			datum.datasetName,
 			context
 		);
+
+		if (
+			(context && context.selectionMethod === 'click') ||
+			context.selectionMethod === 'enter'
+		) {
+			this.instance.triggerClickAnalytics(datum.raw.source._click_id);
+		}
 		if (event.isDefaultPrevented() === false) {
 			this.dropdown.close();
 
@@ -704,6 +713,5 @@ function destroyDomStructure($node, cssClasses) {
 
 Typeahead.Dropdown = Dropdown;
 Typeahead.Input = Input;
-Typeahead.sources = require('../sources/index');
 
 module.exports = Typeahead;

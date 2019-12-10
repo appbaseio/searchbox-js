@@ -41,7 +41,9 @@ function autocomplete(selector, options, datasets, typeaheadObject) {
 				keyboardShortcuts: options.keyboardShortcuts,
 				appendTo: options.appendTo,
 				autoWidth: options.autoWidth,
-				ariaLabel: options.ariaLabel || input.getAttribute('aria-label')
+				ariaLabel:
+					options.ariaLabel || input.getAttribute('aria-label'),
+				instance: options.instance
 			});
 		$input.data(typeaheadKey, typeahead);
 	});
@@ -69,7 +71,6 @@ function autocomplete(selector, options, datasets, typeaheadObject) {
 	return inputs;
 }
 
-autocomplete.sources = Typeahead.sources;
 autocomplete.escapeHighlightedString = _.escapeHighlightedString;
 
 var wasAutocompleteSet = 'autocomplete' in window;
