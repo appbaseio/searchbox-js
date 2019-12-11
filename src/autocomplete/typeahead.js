@@ -24,7 +24,12 @@ function Typeahead(o) {
 		_.error('missing input');
 	}
 
+	if (!o.instance) {
+		_.error('missing searchbase instance');
+	}
+
 	this.isActivated = false;
+	this.instance = o.instance;
 	this.debug = !!o.debug;
 	this.autoselect = !!o.autoselect;
 	this.autoselectOnBlur = !!o.autoselectOnBlur;
@@ -39,7 +44,7 @@ function Typeahead(o) {
 
 	if (o.hint && o.appendTo) {
 		throw new Error(
-			"[autocomplete.js] hint and appendTo options can't be used at the same time"
+			"[searchbox] hint and appendTo options can't be used at the same time"
 		);
 	}
 
@@ -103,7 +108,8 @@ function Typeahead(o) {
 		datasets: o.datasets,
 		templates: o.templates,
 		cssClasses: o.cssClasses,
-		minLength: this.minLength
+		minLength: this.minLength,
+		instance: o
 	})
 		.onSync('suggestionClicked', this._onSuggestionClicked, this)
 		.onSync('cursorMoved', this._onCursorMoved, this)
@@ -472,6 +478,19 @@ _.mixin(Typeahead.prototype, {
 			datum.datasetName,
 			context
 		);
+
+		if (
+			(this.instance &&
+				this.instance.analytics &&
+				context &&
+				context.selectionMethod === 'click') ||
+			context.selectionMethod === 'enter'
+		) {
+			this.instance.analyticsInstance.registerClick(
+				datum.raw._click_id,
+				true
+			);
+		}
 		if (event.isDefaultPrevented() === false) {
 			this.dropdown.close();
 
@@ -704,6 +723,5 @@ function destroyDomStructure($node, cssClasses) {
 
 Typeahead.Dropdown = Dropdown;
 Typeahead.Input = Input;
-Typeahead.sources = require('../sources/index');
 
 module.exports = Typeahead;

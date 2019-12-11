@@ -13,13 +13,27 @@ var EventEmitter = require('./event_emitter.js');
 // constructor
 // -----------
 
+function sourceFn(query, cb, that) {
+	that.instance.setValue(query, {
+		triggerSuggestionsQuery: true
+	});
+	// eslint-disable-next-line
+	cb([], that.instance.suggestionsRequestPending);
+
+	that.instance.onSuggestions = function(suggestions) {
+		for (var i = 0; i < suggestions.data.length; i++) {
+			Object.assign(suggestions.data[i], {
+				_click_id: i + 1
+			});
+		}
+		console.log(suggestions.data);
+		cb(suggestions.data, that.instance.suggestionsRequestPending);
+	};
+}
+
 function Dataset(o) {
 	o = o || {};
 	o.templates = o.templates || {};
-
-	if (!o.source) {
-		_.error('missing source');
-	}
 
 	if (o.name && !isValidName(o.name)) {
 		_.error('invalid dataset name: ' + o.name);
@@ -36,12 +50,13 @@ function Dataset(o) {
 			? _.getUniqueId()
 			: o.name;
 
-	this.source = o.source;
+	this.source = o.source || sourceFn;
 	this.displayFn = getDisplayFn(o.display || o.displayKey);
 
 	this.debounce = o.debounce;
 
 	this.cache = o.cache !== false;
+	this.instance = o.instance;
 
 	this.templates = getTemplates(o.templates, this.displayFn);
 
@@ -278,7 +293,8 @@ _.mixin(Dataset.prototype, EventEmitter, {
 		if (this.shouldFetchFromCache(query)) {
 			handleSuggestions.apply(
 				this,
-				[this.cachedSuggestions].concat(this.cachedRenderExtraArgs)
+				[this.cachedSuggestions].concat(this.cachedRenderExtraArgs),
+				this
 			);
 		} else {
 			var that = this;
@@ -286,7 +302,7 @@ _.mixin(Dataset.prototype, EventEmitter, {
 				// When the call is debounced the condition avoid to do a useless
 				// request with the last character when the input has been cleared
 				if (!that.canceled) {
-					that.source(query, handleSuggestions.bind(that));
+					that.source(query, handleSuggestions.bind(that), that);
 				}
 			};
 

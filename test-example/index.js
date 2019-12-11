@@ -31,9 +31,8 @@ const analyticsInstance = new Searchbase({
 	]
 });
 
-searchbox('#git', {}, [
+searchbox('#git', { instance }, [
 	{
-		source: searchbox.sources.hits(instance),
 		templates: {
 			suggestion: function(suggestion) {
 				return `<p class="is-4">${suggestion.label}</p>`;
@@ -60,9 +59,8 @@ searchbox('#git', {}, [
 	}
 ]);
 
-searchbox('#git2', { hint: false }, [
+searchbox('#git2', { hint: false, instance }, [
 	{
-		source: searchbox.sources.hits(instance),
 		templates: {
 			suggestion: function(suggestion) {
 				return `<p class="is-4">${suggestion.label}</p>`;
@@ -71,9 +69,8 @@ searchbox('#git2', { hint: false }, [
 	}
 ]);
 
-searchbox('#git3', { autoselect: true }, [
+searchbox('#git3', { autoselect: true, instance }, [
 	{
-		source: searchbox.sources.hits(instance),
 		templates: {
 			suggestion: function(suggestion) {
 				return `<p class="is-4">${suggestion.label}</p>`;
@@ -82,9 +79,8 @@ searchbox('#git3', { autoselect: true }, [
 	}
 ]);
 
-searchbox('#git4', { clearOnSelected: true }, [
+searchbox('#git4', { clearOnSelected: true, instance }, [
 	{
-		source: searchbox.sources.hits(instance),
 		templates: {
 			suggestion: function(suggestion) {
 				return `<p class="is-4">${suggestion.label}</p>`;
@@ -93,9 +89,8 @@ searchbox('#git4', { clearOnSelected: true }, [
 	}
 ]);
 
-searchbox('#git5', { openOnFocus: true }, [
+searchbox('#git5', { openOnFocus: true, instance }, [
 	{
-		source: searchbox.sources.hits(instance),
 		templates: {
 			suggestion: function(suggestion) {
 				return `<p class="is-4">${suggestion.label}</p>`;
@@ -104,9 +99,8 @@ searchbox('#git5', { openOnFocus: true }, [
 	}
 ]);
 
-searchbox('#git6', { keyboardShortcuts: ['s', 'a'] }, [
+searchbox('#git6', { keyboardShortcuts: ['s', 'a'], instance }, [
 	{
-		source: searchbox.sources.hits(instance),
 		templates: {
 			suggestion: function(suggestion) {
 				return `<p class="is-4">${suggestion.label}</p>`;
@@ -115,9 +109,8 @@ searchbox('#git6', { keyboardShortcuts: ['s', 'a'] }, [
 	}
 ]);
 
-searchbox('#git7', { minLength: 3 }, [
+searchbox('#git7', { minLength: 3, instance }, [
 	{
-		source: searchbox.sources.hits(instance),
 		templates: {
 			suggestion: function(suggestion) {
 				return `<p class="is-4">${suggestion.label}</p>`;
@@ -126,9 +119,8 @@ searchbox('#git7', { minLength: 3 }, [
 	}
 ]);
 
-searchbox('#git8', {}, [
+searchbox('#git8', { instance }, [
 	{
-		source: searchbox.sources.hits(instance),
 		templates: {
 			suggestion: function(suggestion) {
 				return `<p class="is-4">${suggestion.label}</p>`;
@@ -152,9 +144,8 @@ searchbox('#git8', {}, [
 		console.log('empty', event);
 	});
 
-searchbox('#git9', {}, [
+searchbox('#git9', { instance }, [
 	{
-		source: searchbox.sources.hits(instance),
 		templates: {
 			suggestion: function(suggestion) {
 				return `<p class="is-4">${suggestion.label}</p>`;
@@ -164,9 +155,8 @@ searchbox('#git9', {}, [
 	}
 ]);
 
-searchbox('#git10', {}, [
+searchbox('#git10', { instance }, [
 	{
-		source: searchbox.sources.hits(instance),
 		templates: {
 			suggestion: function(suggestion) {
 				return `<p class="is-4">${suggestion.label}</p>`;
@@ -178,27 +168,24 @@ searchbox('#git10', {}, [
 	}
 ]);
 
-searchbox('#git11', {}, [
+searchbox(
+	'#git11',
 	{
-		source: searchbox.sources.hits(analyticsInstance),
-		templates: {
-			suggestion: function(suggestion) {
-				return `<p class="is-4">${suggestion.label}</p>`;
+		instance: analyticsInstance
+	},
+	[
+		{
+			templates: {
+				suggestion: function(suggestion) {
+					return `<p class="is-4">${suggestion.label}</p>`;
+				}
 			}
 		}
-	}
-]).on('selected', function(event, suggestion, dataset, context) {
-	if (
-		(context && context.selectionMethod === 'click') ||
-		context.selectionMethod === 'enter'
-	) {
-		analyticsInstance.triggerClickAnalytics(suggestion.source._click_id);
-	}
-});
+	]
+);
 
-searchbox('#git12', {}, [
+searchbox('#git12', { instance }, [
 	{
-		source: searchbox.sources.hits(analyticsInstance),
 		templates: {
 			suggestion: function(suggestion) {
 				return `<p class="is-4">${suggestion.label}</p>`;
