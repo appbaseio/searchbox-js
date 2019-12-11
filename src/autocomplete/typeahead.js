@@ -24,6 +24,10 @@ function Typeahead(o) {
 		_.error('missing input');
 	}
 
+	if (!o.instance) {
+		_.error('missing searchbase instance');
+	}
+
 	this.isActivated = false;
 	this.instance = o.instance;
 	this.debug = !!o.debug;
@@ -40,7 +44,7 @@ function Typeahead(o) {
 
 	if (o.hint && o.appendTo) {
 		throw new Error(
-			"[autocomplete.js] hint and appendTo options can't be used at the same time"
+			"[searchbox] hint and appendTo options can't be used at the same time"
 		);
 	}
 
@@ -476,10 +480,16 @@ _.mixin(Typeahead.prototype, {
 		);
 
 		if (
-			(context && context.selectionMethod === 'click') ||
+			(this.instance &&
+				this.instance.analytics &&
+				context &&
+				context.selectionMethod === 'click') ||
 			context.selectionMethod === 'enter'
 		) {
-			this.instance.triggerClickAnalytics(datum.raw.source._click_id);
+			this.instance.analyticsInstance.registerClick(
+				datum.raw._click_id,
+				true
+			);
 		}
 		if (event.isDefaultPrevented() === false) {
 			this.dropdown.close();

@@ -21,6 +21,12 @@ function sourceFn(query, cb, that) {
 	cb([], that.instance.suggestionsRequestPending);
 
 	that.instance.onSuggestions = function(suggestions) {
+		for (var i = 0; i < suggestions.data.length; i++) {
+			Object.assign(suggestions.data[i], {
+				_click_id: i + 1
+			});
+		}
+		console.log(suggestions.data);
 		cb(suggestions.data, that.instance.suggestionsRequestPending);
 	};
 }
