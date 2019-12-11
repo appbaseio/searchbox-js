@@ -51,9 +51,8 @@ instance.onValueChange = value => {
 	micButton.className = 'btn btn-light';
 };
 
-searchbox('#git', {}, [
+searchbox('#git', { instance }, [
 	{
-		source: searchbox.sources.hits(instance),
 		templates: {
 			suggestion: function(suggestion) {
 				return `<p class="is-4">${suggestion.label}</p>`;

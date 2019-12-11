@@ -26,7 +26,6 @@ function sourceFn(query, cb, that) {
 				_click_id: i + 1
 			});
 		}
-		console.log(suggestions.data);
 		cb(suggestions.data, that.instance.suggestionsRequestPending);
 	};
 }

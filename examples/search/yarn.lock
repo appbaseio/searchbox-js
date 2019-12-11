@@ -2,17 +2,25 @@
 # yarn lockfile v1
 
 
-"@appbaseio/searchbase@^1.0.0-alpha":
-  version "1.0.0-alpha"
-  resolved "https://registry.yarnpkg.com/@appbaseio/searchbase/-/searchbase-1.0.0-alpha.tgz#dc1b6cf44b5eef27ecc8c9fc6e57093bbed64224"
-  integrity sha512-wM4Dt4G+/XEoCe4no2q09XUihmNBmhVrWCEe5kBIXdJoe/zgg9cmA6JP4YZV8Yh/kJuo+8HD2f5nsnQ1PYXB4g==
+"@appbaseio/analytics@^1.0.0-alpha.1":
+  version "1.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/analytics/-/analytics-1.0.0-alpha.1.tgz#8e9b5fb9dc121e7ef44f7d2df60c209d7bdbacd7"
+  integrity sha512-QJFneR/U0ANeUxV/5dZOaNmXZh4Z78VDxYRF8+Z9OISa4KLioTsIgO5rv9YBT99/cRzvO7zzjgGk0mhdBo+uUg==
   dependencies:
     cross-fetch "^3.0.4"
 
-"@appbaseio/searchbox@0.0.1-alpha":
-  version "0.0.1-alpha"
-  resolved "https://registry.yarnpkg.com/@appbaseio/searchbox/-/searchbox-0.0.1-alpha.tgz#e0c9b1e79b75023fe5007188f4c85133edf13659"
-  integrity sha512-o4/EEqR9IOMXVWBbn45Tp4XuVorkr4IK1VzNh4Yy8WR4chmX1jBGZfQu4vjXHTgvCZg/abJ7ahqQV9fncFLChw==
+"@appbaseio/searchbase@^1.0.0-alpha.4":
+  version "1.0.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/@appbaseio/searchbase/-/searchbase-1.0.0-alpha.4.tgz#bd1be12d4204b1210aeeed579cbe9bc9854ad248"
+  integrity sha512-O87nF6VqXmm6mmOLLSDaXcjfKHODlnl6t9d91e0TUGk2yv3r8Ss9ERoBcdvf0pcX134Wp62uMb05C78Sl5MgZw==
+  dependencies:
+    "@appbaseio/analytics" "^1.0.0-alpha.1"
+    cross-fetch "^3.0.4"
+
+"@appbaseio/searchbox@^0.0.1-alpha.1":
+  version "0.0.1-alpha.1"
+  resolved "https://registry.yarnpkg.com/@appbaseio/searchbox/-/searchbox-0.0.1-alpha.1.tgz#7ab201dfb954ddc52402844be4b2ba930f64a673"
+  integrity sha512-nmbY/9n2NRJcWELyi8jilj5kPYDswkxeLvoBCW4isZieXvFHVKqK7yAif4Y487KIw7FHnFlYHgvRzS4p2zmQyw==
   dependencies:
     immediate "^3.2.3"
 

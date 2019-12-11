@@ -168,7 +168,7 @@ searchbox('#git10', { instance }, [
 	}
 ]);
 
-searchbox('#git11', { analyticsInstance }, [
+searchbox('#git11', { instance: analyticsInstance }, [
 	{
 		templates: {
 			suggestion: function(suggestion) {
