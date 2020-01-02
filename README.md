@@ -156,7 +156,8 @@ When initializing an autocomplete, there are a number of global options you can 
     -   `dropdownMenu` – the dropdown menu template. The template should include all _dataset_ placeholders.
     -   `header` – the header to prepend to the dropdown menu
     -   `footer` – the footer to append to the dropdown menu
-    -   `loader` – he template to display when the datasets is laoding results. The templating function
+    -   `render` – the template use to dispaly custom suggestions with a different container (div element) or different layout. The templating function is called with a context containing the `suggestions`, `promotedData`, `rawData`, `resultStats` & a function called `getItemProps` which is used to add data attributes for internal functioning of events and suggestion.
+    -   `loader` – the template to display when the datasets is loading results. The templating function
         is called with a context containing the underlying `query`.
     -   `empty` – the template to display when none of the datasets are returning results. The templating function
         is called with a context containing the underlying `query`.
