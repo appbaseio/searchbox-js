@@ -9,10 +9,10 @@
   dependencies:
     cross-fetch "^3.0.4"
 
-"@appbaseio/searchbase@^1.0.0-alpha.4":
-  version "1.0.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/@appbaseio/searchbase/-/searchbase-1.0.0-alpha.4.tgz#bd1be12d4204b1210aeeed579cbe9bc9854ad248"
-  integrity sha512-O87nF6VqXmm6mmOLLSDaXcjfKHODlnl6t9d91e0TUGk2yv3r8Ss9ERoBcdvf0pcX134Wp62uMb05C78Sl5MgZw==
+"@appbaseio/searchbase@^1.0.1-alpha.5":
+  version "1.0.1-alpha.5"
+  resolved "https://registry.yarnpkg.com/@appbaseio/searchbase/-/searchbase-1.0.1-alpha.5.tgz#2bca35ed94cec1d23593bc7921e6b460d28dfebd"
+  integrity sha512-fl5Z437TRbvItdgcUDAKRLbXWJpKkMbeUWDghjRnQRU7hoVHP3qkM+ZMzjG+phvTU8XbsykMs8mKNPnPP5u/+Q==
   dependencies:
     "@appbaseio/analytics" "^1.0.0-alpha.1"
     cross-fetch "^3.0.4"

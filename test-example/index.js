@@ -196,3 +196,91 @@ searchbox('#git12', { instance }, [
 		}
 	}
 ]);
+
+searchbox(
+	'#git13',
+	{
+		instance: analyticsInstance
+	},
+	[
+		{
+			templates: {
+				suggestion: function(suggestion) {
+					if (suggestion.source._promoted) {
+						return `<p class="is-4">${suggestion.label} <span class="badge badge-primary">Promoted</span></p>`;
+					}
+					return `<p class="is-4">${suggestion.label}</p>`;
+				}
+			}
+		}
+	]
+);
+
+searchbox(
+	'#git14',
+	{
+		instance: analyticsInstance
+	},
+	[
+		{
+			templates: {
+				render: function({
+					data,
+					getItemProps,
+					promotedData,
+					resultStats
+				}) {
+					const suggestionHTML = data
+						.filter(i => !i.source._promoted)
+						.reduce((agg, i) => {
+							return (
+								agg +
+								`
+									<div ${getItemProps(i)}>
+										${i.label}
+									</div>
+								`
+							);
+						}, '');
+					const promotedHTML = data
+						.filter(i => !!i.source._promoted)
+						.reduce((agg, i) => {
+							return (
+								agg +
+								`
+									<div ${getItemProps(i)}>
+										${i.label}
+									</div>
+								`
+							);
+						}, '');
+
+					if (resultStats.promoted) {
+						return `
+							<div class="shadow-sm p-2 text-light bg-primary">
+								Promoted Results
+							</div>
+							${promotedHTML}
+							<div class="shadow-sm p-2 text-light bg-primary">
+								Search Results
+							</div>
+							${suggestionHTML}
+							<div class="shadow-sm p-2 text-dark bg-light">
+								Found ${resultStats.numberOfResults} in ${resultStats.time}ms
+							</div>
+						`;
+					}
+					return `
+						<div class="shadow-sm p-2 text-light bg-primary">
+							Search Results
+						</div>
+						${suggestionHTML}
+						<div class="shadow-sm p-2 text-muted bg-light">
+							Found ${resultStats.numberOfResults} in ${resultStats.time}ms
+						</div>
+					`;
+				}
+			}
+		}
+	]
+);

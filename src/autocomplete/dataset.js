@@ -4,6 +4,10 @@ var datasetKey = 'aaDataset';
 var valueKey = 'aaValue';
 var datumKey = 'aaDatum';
 
+var customdatasetKey = 'aa-dataset';
+var customvalueKey = 'aa-value';
+var customdatumKey = 'aa-datum';
+
 var _ = require('../common/utils.js');
 var DOM = require('../common/dom.js');
 var html = require('./html.js');
@@ -21,12 +25,22 @@ function sourceFn(query, cb, that) {
 	cb([], that.instance.suggestionsRequestPending);
 
 	that.instance.onSuggestions = function(suggestions) {
-		for (var i = 0; i < suggestions.data.length; i++) {
-			Object.assign(suggestions.data[i], {
-				_click_id: i + 1
+		var parsedSuggestions = suggestions.data;
+		for (var j = 0; j < parsedSuggestions.length; j++) {
+			Object.assign(parsedSuggestions[j], {
+				_click_id: j + 1
 			});
 		}
-		cb(suggestions.data, that.instance.suggestionsRequestPending);
+		cb(parsedSuggestions, that.instance.suggestionsRequestPending, {
+			resultStats: {
+				time: suggestions.time,
+				hidden: suggestions.hidden || 0,
+				promoted: suggestions.promoted || 0,
+				numberOfResults: suggestions.numberOfResults
+			},
+			rawData: suggestions.rawData || [],
+			promotedData: suggestions.promotedData || []
+		});
 	};
 }
 
@@ -92,7 +106,7 @@ Dataset.extractDatasetName = function extractDatasetName(el) {
 };
 
 Dataset.extractValue = function extractValue(el) {
-	return DOM.element(el).data(valueKey);
+	return decodeURIComponent(DOM.element(el).data(valueKey));
 };
 
 Dataset.extractDatum = function extractDatum(el) {
@@ -100,7 +114,7 @@ Dataset.extractDatum = function extractDatum(el) {
 	if (typeof datum === 'string') {
 		// Zepto has an automatic deserialization of the
 		// JSON encoded data attribute
-		datum = JSON.parse(datum);
+		datum = JSON.parse(decodeURIComponent(datum));
 	}
 	return datum;
 };
@@ -111,7 +125,7 @@ Dataset.extractDatum = function extractDatum(el) {
 _.mixin(Dataset.prototype, EventEmitter, {
 	// ### private
 
-	_render: function render(query, suggestions, loading) {
+	_render: function render(query, suggestions, loading, options) {
 		if (!this.$el) {
 			return;
 		}
@@ -199,6 +213,28 @@ _.mixin(Dataset.prototype, EventEmitter, {
 		}
 
 		function getSuggestionsHtml() {
+			if (that.templates.render) {
+				const className =
+					this.cssClasses.prefix + this.cssClasses.suggestion;
+				const stringifiedHTML = that.templates.render({
+					data: suggestions,
+					promotedData: options.promotedData,
+					resultStats: options.resultStats,
+					rawData: options.rawData,
+					getItemProps: function(item) {
+						const id = [
+							'option',
+							Math.floor(Math.random() * 100000000)
+						].join('-');
+						return `class=${className} role="option" id=${id} data-${customdatumKey}=${encodeURIComponent(
+							JSON.stringify(item)
+						)} data-${customvalueKey}=${encodeURIComponent(
+							that.displayFn(item)
+						) || undefined} data-${customdatasetKey}=${that.name}`;
+					}
+				});
+				return stringifiedHTML;
+			}
 			var args = [].slice.call(arguments, 0);
 			var $suggestions;
 			var nodes;
@@ -245,7 +281,6 @@ _.mixin(Dataset.prototype, EventEmitter, {
 				$el.children().each(function() {
 					DOM.element(this).css(self.css.suggestionChild);
 				});
-
 				return $el;
 			}
 		}
@@ -270,7 +305,7 @@ _.mixin(Dataset.prototype, EventEmitter, {
 	},
 
 	update: function update(query) {
-		function handleSuggestions(suggestions, isLoading) {
+		function handleSuggestions(suggestions, isLoading, options) {
 			// if the update has been canceled or if the query has changed
 			// do not render the suggestions as they've become outdated
 			if (!this.canceled && query === this.query) {
@@ -281,7 +316,8 @@ _.mixin(Dataset.prototype, EventEmitter, {
 				this._render.apply(
 					this,
 					[query, suggestions].concat(extraArgs),
-					isLoading
+					isLoading,
+					options
 				);
 			}
 		}
@@ -384,7 +420,8 @@ function getTemplates(templates, displayFn) {
 		loader: templates.loader && _.templatify(templates.loader),
 		header: templates.header && _.templatify(templates.header),
 		footer: templates.footer && _.templatify(templates.footer),
-		suggestion: templates.suggestion || suggestionTemplate
+		suggestion: templates.suggestion || suggestionTemplate,
+		render: templates.render || undefined
 	};
 
 	function suggestionTemplate(context) {
